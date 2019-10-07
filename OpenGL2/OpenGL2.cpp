@@ -15,8 +15,8 @@ void init(GLFWwindow* window) {
 	glBindVertexArray(vao[0]);
 }
 
-float x = 0.0f;
-float inc = 0.01f;
+GLfloat size_p = 0.0f;
+GLfloat inc = 1.0f;
 
 void display(GLFWwindow* window, double currentTime) {
 	glClear(GL_DEPTH_BUFFER_BIT);
@@ -25,13 +25,15 @@ void display(GLFWwindow* window, double currentTime) {
 
 	glUseProgram(renderingProgram);
 
-	x += inc;
-	if (x > 1.0f) inc = -0.01f;
-	if (x < -1.0f) inc = 0.01f;
-	GLuint offsetLoc = glGetUniformLocation(renderingProgram, "offset");
-	glProgramUniform1f(renderingProgram, offsetLoc, x);
+	size_p += inc;
+	if (size_p > 50.0f) inc = -1.0f;
+	if (size_p < 0.0f) inc = 1.0f;
+//	GLuint offsetLoc = glGetUniformLocation(renderingProgram, "offset");
+//	glProgramUniform1f(renderingProgram, offsetLoc, x);
+//	cout << size_p << endl;
+	glPointSize(size_p);
 
-	glDrawArrays(GL_TRIANGLES, 0, 3);
+	glDrawArrays(GL_POINTS, 0, 1);
 }
 
 
